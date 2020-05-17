@@ -1,0 +1,16 @@
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  margin-right: 100px;
+}
+
+h2 {
+  color: #2a2252;
+  font-size: 1.2em;
+  span {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+}
