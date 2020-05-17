@@ -44,6 +44,9 @@
 /* Responsive */
 
 @media (max-width: 767px) {
+  .table-top-header {
+    display: none !important;
+  }
   .fl-table {
     display: block;
     width: 100%;
@@ -110,6 +113,15 @@
   }
 }
 
+th.sticky-th {
+  position: sticky;
+  top: 0;
+}
+
+th.meta-date {
+  font-size: 1.25em;
+}
+
 .light-blue {
   background: #a6d8ff;
 }
@@ -127,7 +139,11 @@
 }
 
 .purple-bg {
-  background-color: purple;
+  background: #933993;
+}
+
+.light-gray-bg {
+  background: #d6d0ee;
 }
 
 td {
@@ -139,10 +155,8 @@ td {
   padding: 20px;
 }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
+.meta-bold {
+  font-weight: bold;
 }
 
 .flash-call .call-option {
@@ -196,5 +210,40 @@ td {
   }
   to {
     background: red;
+  }
+}
+
+@media (min-width: 767px) {
+  .table-container {
+    height: 90vh; /* For 100% screen height */
+  }
+  table {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+  }
+  table thead {
+    /* head takes the height it requires,
+        and it's not scaled when table is resized */
+    flex: 0 0 auto;
+    width: calc(100% - 0.1em);
+    display: table;
+    table-layout: fixed;
+  }
+  table tbody {
+    /* body takes all the remaining available space */
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: scroll;
+  }
+  table tbody tr {
+    width: 100%;
+  }
+
+  table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
   }
 }

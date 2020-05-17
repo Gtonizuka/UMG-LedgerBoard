@@ -85,18 +85,16 @@ const OptionsView = () => {
       const newContracts = contracts.map((x) => {
         if (x.put && x.call) {
           if (x.put.id === contract_id) {
-            x.classCSS = '';
+            x.putClass = 'flash-put';
             x.put.ask = ask;
             x.put.bid = bid;
-            x.classCSS = 'flash-put';
+            setTimeout(() => (x.putClass = 'no-call'), 3000);
           } else if (x.call.id === contract_id) {
-            x.classCSS = '';
+            x.callClass = 'flash-call';
             x.call.ask = ask;
             x.call.bid = bid;
-            x.classCSS = 'flash-call';
+            setTimeout(() => (x.callClass = 'no-call'), 3000);
           }
-
-          //   setTimeout(() => (x.classCSS = ''), 5000);
         }
         return x;
       });
@@ -105,20 +103,20 @@ const OptionsView = () => {
     }
   };
 
-  //   if (contracts.length > 1) {
-  //     if (!isSocket) {
-  //       console.log('MARIOSOCKET');
-  //       socket = io('http://localhost:4000');
-  //       setIsSocket(true);
-  //       socket.on('connect', () => {
-  //         console.log('connected to socket');
-  //       });
-  //       socket.on('quotes', (data) => {
-  //         console.log(data);
-  //         updateQuote(data);
-  //       });
-  //     }
-  //   }
+  if (contracts.length > 1) {
+    if (!isSocket) {
+      console.log('MARIOSOCKET');
+      socket = io('http://localhost:4000');
+      setIsSocket(true);
+      socket.on('connect', () => {
+        console.log('connected to socket');
+      });
+      socket.on('quotes', (data) => {
+        console.log(data);
+        updateQuote(data);
+      });
+    }
+  }
 
   return (
     <div>
