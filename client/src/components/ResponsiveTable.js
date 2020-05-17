@@ -3,7 +3,6 @@ import './ResponsiveTable.scss';
 import { v4 as uuidv4 } from 'uuid';
 
 const ResponsiveTable = ({ data }) => {
-  console.log(data);
   return (
     <div className='table-wrapper'>
       <table className='fl-table'>
@@ -20,8 +19,7 @@ const ResponsiveTable = ({ data }) => {
         </thead>
         <tbody>
           {data.map((option) => {
-            if (option) {
-              console.log(option, 'optionnn');
+            if (option && option.put) {
               const { call, data_expires, put, strike_price } = option;
               return (
                 <tr key={uuidv4()}>

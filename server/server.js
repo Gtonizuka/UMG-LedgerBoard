@@ -15,15 +15,11 @@ const ws = new WebSocket('wss://trade.ledgerx.com/api/ws');
 ws.on('message', function incoming(data) {
   console.log(data);
 
-  io.emit('suca', data);
+  io.emit('quotes', data);
 });
 
-// let io = require('socket.io')(http);
-
 io.on('connection', function (socket) {
-  socket.on('new-operations', function (data) {
-    io.emit('new-remote-operations', data);
-  });
+  console.log('Connection established');
 });
 
 http.listen(4000, function () {
