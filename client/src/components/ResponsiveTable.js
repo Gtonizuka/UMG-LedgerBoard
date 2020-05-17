@@ -1,8 +1,11 @@
 import React from 'react';
 import './ResponsiveTable.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 const ResponsiveTable = ({ data }) => {
+  const expire = data.map((el) => el.date_expires);
+  const expireDates = [...new Set(expire)];
+  console.log(expireDates, 'fil');
+
   return (
     <div className='table-wrapper'>
       <table className='fl-table'>
@@ -18,22 +21,35 @@ const ResponsiveTable = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((option) => {
-            if (option && option.put) {
-              const { call, data_expires, put, strike_price } = option;
-              return (
-                <tr key={uuidv4()}>
-                  <td>{call.open_interest}</td>
-                  <td>{call.bid}</td>
-                  <td>{call.ask}</td>
-                  <td>{strike_price}</td>
-                  <td>{put.bid}</td>
-                  <td>{put.ask}</td>
-                  <td>{put.open_interest}</td>
-                </tr>
-              );
-            }
-          })}
+          {expireDates.map((date) => (
+            <>
+              <tr className={'title-row'}>
+                <th>{date}</th>
+              </tr>
+              {data.map((option) => {
+                console.log(option.date_expires, 'OPTIONN');
+                console.log(date, 'DATE');
+                if (option.put && option.date_expires === date) {
+                  const { call, data_expires, put, strike_price } = option;
+                  console.log('SUCC');
+                  return (
+                    <tr
+                      key={`${call.id}_${put.id}`}
+                      className={option.classCSS}
+                    >
+                      <td className={'call-option'}>{call.open_interest}</td>
+                      <td className={'call-option'}>{call.bid}</td>
+                      <td className={'call-option'}>{call.ask}</td>
+                      <td>{strike_price}</td>
+                      <td className={'put-option'}>{put.bid}</td>
+                      <td className={'put-option'}>{put.ask}</td>
+                      <td className={'put-option'}>{put.open_interest}</td>
+                    </tr>
+                  );
+                }
+              })}
+            </>
+          ))}
         </tbody>
       </table>
     </div>

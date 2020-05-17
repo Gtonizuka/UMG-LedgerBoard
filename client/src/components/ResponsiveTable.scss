@@ -129,3 +129,72 @@
 .purple-bg {
   background-color: purple;
 }
+
+td {
+  -moz-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+  color: black;
+  padding: 20px;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.flash-call .call-option {
+  //   background-color: red !important;
+  -webkit-animation-name: flash-animation-variant;
+  -webkit-animation-duration: 2s;
+
+  animation-name: flash-animation-variant;
+  animation-duration: 2s;
+}
+
+@-webkit-keyframes flash-animation-variant {
+  from {
+    background: yellow;
+  }
+  to {
+    background: red;
+  }
+}
+
+@keyframes flash-animation-variant {
+  from {
+    background: blue;
+  }
+  to {
+    background: purple;
+  }
+}
+
+.flash-put .put-option {
+  //   background-color: red !important;
+  -webkit-animation-name: flash-animation;
+  -webkit-animation-duration: 2s;
+
+  animation-name: flash-animation;
+  animation-duration: 2s;
+}
+
+@-webkit-keyframes flash-animation {
+  from {
+    background: yellow;
+  }
+  to {
+    background: red;
+  }
+}
+
+@keyframes flash-animation {
+  from {
+    background: yellow;
+  }
+  to {
+    background: red;
+  }
+}

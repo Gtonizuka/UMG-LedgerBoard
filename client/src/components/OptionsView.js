@@ -9,17 +9,13 @@ import { groupBy } from '../utils/groupBy';
 
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
-// const socket = io('http://localhost:4000');
-
-// socket.on('connect', () => {
-//   console.log('connected to socket');
-//   socket.on('quotes', (data) => console.log(data));
-// });
+let socket;
 
 const OptionsView = () => {
   const [contracts, setContracts] = useState([]);
+  const [isContracts, setIsContracts] = useState(false);
 
-  const [expireDates, setExpireDates] = useState([]);
+  const [isSocket, setIsSocket] = useState(false);
 
   useEffect(() => {
     const fetchContracts = async () => {
@@ -32,11 +28,6 @@ const OptionsView = () => {
         const { data } = await axios.get(
           `${proxyUrl}${REST_ENDPOINT}/contracts?after_ts=2020-05-15T00%3A00%3A00.000Z&limit=0`
         );
-
-        // Get expiration dates
-        const expire = contracts.map((el) => el.date_expires);
-        const filtered = [...new Set(expire)];
-        setExpireDates(filtered);
 
         // Get active contracts
         const active = data.data.filter(
@@ -65,16 +56,69 @@ const OptionsView = () => {
           })
         );
 
-        setContracts(grouped);
+        // setContracts(grouped);
+        setContracts((prevContracts) => [...prevContracts, ...grouped]);
+
+        setIsContracts(true);
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchContracts();
-  }, []);
+    // Avoid multiple XHR connections
+    if (!isContracts) {
+      console.log('SUCAAAAA');
+      fetchContracts();
+    }
+  }, [setContracts]);
 
   console.log(contracts, 'contractt');
+
+  //   {"ask": 944500, "bid": 939800, "contract_id": 22200474, "contract_type": 2, "clock": 18076, "type": "book_top"}
+
+  const updateQuote = (data) => {
+    const parsed = JSON.parse(data);
+    if (parsed.type === 'book_top') {
+      console.log('BOOK TOP');
+      const { contract_id, ask, bid } = parsed;
+
+      const newContracts = contracts.map((x) => {
+        if (x.put && x.call) {
+          if (x.put.id === contract_id) {
+            x.classCSS = '';
+            x.put.ask = ask;
+            x.put.bid = bid;
+            x.classCSS = 'flash-put';
+          } else if (x.call.id === contract_id) {
+            x.classCSS = '';
+            x.call.ask = ask;
+            x.call.bid = bid;
+            x.classCSS = 'flash-call';
+          }
+
+          //   setTimeout(() => (x.classCSS = ''), 5000);
+        }
+        return x;
+      });
+
+      setContracts(newContracts);
+    }
+  };
+
+  //   if (contracts.length > 1) {
+  //     if (!isSocket) {
+  //       console.log('MARIOSOCKET');
+  //       socket = io('http://localhost:4000');
+  //       setIsSocket(true);
+  //       socket.on('connect', () => {
+  //         console.log('connected to socket');
+  //       });
+  //       socket.on('quotes', (data) => {
+  //         console.log(data);
+  //         updateQuote(data);
+  //       });
+  //     }
+  //   }
 
   return (
     <div>
