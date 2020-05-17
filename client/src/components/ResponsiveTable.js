@@ -1,6 +1,6 @@
 import React from 'react';
 import './ResponsiveTable.scss';
-// import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const ResponsiveTable = ({ data }) => {
   console.log(data);
@@ -24,7 +24,7 @@ const ResponsiveTable = ({ data }) => {
               console.log(option, 'optionnn');
               const { call, data_expires, put, strike_price } = option;
               return (
-                <tr>
+                <tr key={uuidv4()}>
                   <td>{call.open_interest}</td>
                   <td>{call.bid}</td>
                   <td>{call.ask}</td>

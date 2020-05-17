@@ -4,10 +4,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 
 import ResponsiveTable from './ResponsiveTable';
-// import { groupBy } from '../utils/groupBy';
-// import { getSortedKeyValue } from '../utils/getSortedKeyValue';
-// import { executeCommand } from '../socketsEvents';
-import { REST_ENDPOINT } from '../static/commands';
+import { REST_ENDPOINT } from '../static/API_ENDPOINT';
 
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 // const socket = io('http://localhost:4000');
@@ -21,17 +18,6 @@ const OptionsView = () => {
   const [contracts, setContracts] = useState([]);
 
   const [expireDates, setExpireDates] = useState([]);
-
-  const [booksTop, setbooksTop] = useState([]);
-
-  // BROWSER - DOES NOT WORK
-
-  //   var socket = io('http://localhost:4000', {
-  //     rememberUpgrade: true,
-  //     transports: ['websocket'],
-  //     secure: true,
-  //     rejectUnauthorized: false,
-  //   });
 
   function groupBy(array, f) {
     var groups = {};
@@ -51,7 +37,6 @@ const OptionsView = () => {
         const booksTop = await axios.get(
           `${proxyUrl}${REST_ENDPOINT}/book-tops?`
         );
-        setbooksTop(booksTop);
 
         const { data } = await axios.get(
           `${proxyUrl}${REST_ENDPOINT}/contracts?after_ts=2020-05-15T00%3A00%3A00.000Z&limit=0`
@@ -117,7 +102,6 @@ const OptionsView = () => {
   }, []);
 
   console.log(contracts, 'resultt');
-  console.log(booksTop.data, 'book');
   return (
     <div>
       <h1> QuoteBook </h1>
