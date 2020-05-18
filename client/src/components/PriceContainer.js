@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './price_container.scss';
-import axios from 'axios';
 
 const PriceContainer = ({ price }) => {
   return (
     <div className={'flex-container'}>
       <h2 className={'flex-item'}>
-        BTC ask price: <span>${price.ask} </span>
+        BTC ask price: <span>${price.ask}</span>
       </h2>
       <h2 className={'flex-item'}>
         BTC bid price: <span>${price.bid}</span>
