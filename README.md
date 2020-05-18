@@ -1,10 +1,10 @@
-# Umberto Mirko Garozzo infinite scroll implementation
+# LedgerX options board
 
 ## Run the server
 
-From the server directory first run `npm install` and then `node server.js`. This should spin a server on port 4000.
+From the `server` directory run `npm install` to install dependencies. Therefore run `node server.js`. This will spin a server on port 4000.
 
-## Run the Front End
+## Run the React app
 
 In the project directory, you can run:
 
@@ -26,17 +26,18 @@ Launches the test runner in the interactive watch mode.<br />
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Ledger X live feed option board
+## Live Feed data
 
 I am pulling live data from the Ledger X [https://trade.ledgerx.com/api](live feed)).
 
-Since I had some issue in pulling the data from the API directly from the client, due to auth permission, I took the following steps:
+Since I had some issue in getting the data directly from the React app, due to CORS settings, I took the following steps:
 
-- For the REST API I am using a proxy.
-- For the WSS I am pulling the data from the backend I created first and then stream it to the client.
-  Please note that due to the usage of proxy getting data might be a bit slower than expected.
+- For the REST API I am using a proxy to circumnavigate CORS.
+- For the WSS data I created a Node backend that I use as middleman between the Live Feed server the client. I open a socket connection and directly stream the data for the front end to consume from an Express API.
+  Please note that due to the usage of proxy getting data might be a bit slower than expected. I would also expect some ms delay on WSS data due to the extra layer.
 
-I am displaying all the different contracts data in a scrollable table and the user can see extra details about the contract from clicking the graph icons to the left/right of the table row.
+In the front end I am displaying all the different contracts data in a scrollable table.
+If you would like to see extra details about an individual contract, you can do so by clicking the graph icons to the left/right of the table row. This will redirect to a page where a chart about that contract call/put historical data is displayed.
 
 At the top of the table there is a BTC price field that stais sticky so users can always know which option is in/out of the money.
 

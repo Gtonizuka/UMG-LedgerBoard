@@ -20,6 +20,7 @@ const ContractView = ({ location }) => {
 
   useEffect(() => {
     let pathname = location.pathname.split('/');
+    // Get contract ID from path so no need to pass props
     const path = pathname[2];
 
     const fetchData = async () => {

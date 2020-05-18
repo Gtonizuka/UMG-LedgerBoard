@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './options_view.scss';
 import axios from 'axios';
 import io from 'socket.io-client';
 
+import './options_view.scss';
 import PriceContainer from './PriceContainer';
 import ResponsiveTable from './ResponsiveTable';
+import Spinner from './Spinner';
 import { REST_ENDPOINT } from '../static/API_ENDPOINT';
 import { groupBy } from '../utils/groupBy';
-import Spinner from './Spinner';
 
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
@@ -85,6 +85,8 @@ const OptionsView = () => {
     if (!isContracts) {
       fetchContracts();
     }
+
+    // WSS is the most likely to have memory leaks so we set the flag to true
     return () => setIsSocket(true);
   }, [setContracts, isContracts]);
 
@@ -93,6 +95,7 @@ const OptionsView = () => {
     if (parsed.type === 'book_top') {
       const { contract_id, contract_type, ask, bid } = parsed;
 
+      // BTC contract ID
       if (contract_id === 22200586 || contract_type === 2) {
         setBtcPrice({ bid, ask });
       }
@@ -103,12 +106,12 @@ const OptionsView = () => {
             x.putClass = 'flash-put';
             x.put.ask = ask;
             x.put.bid = bid;
-            setTimeout(() => (x.putClass = 'no-call'), 3000);
+            setTimeout(() => (x.putClass = 'no-flash'), 3000);
           } else if (x.call.id === contract_id) {
             x.callClass = 'flash-call';
             x.call.ask = ask;
             x.call.bid = bid;
-            setTimeout(() => (x.callClass = 'no-call'), 3000);
+            setTimeout(() => (x.callClass = 'no-flash'), 3000);
           }
         }
         return x;
@@ -118,6 +121,8 @@ const OptionsView = () => {
     }
   };
 
+  // Only start WSS when state is set
+  // The reason to have the WSS connection logic outside useEffect is for better performance
   if (contracts.length > 1) {
     if (!isSocket) {
       socket = io('http://localhost:4000');

@@ -214,6 +214,7 @@ td {
   animation-duration: 1s;
 }
 
+// Sticky headers logic
 @media (min-width: 767px) {
   .table-container {
     height: 90vh; /* For 100% screen height */
