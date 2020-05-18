@@ -7,6 +7,7 @@ import PriceContainer from './PriceContainer';
 import ResponsiveTable from './ResponsiveTable';
 import { REST_ENDPOINT } from '../static/API_ENDPOINT';
 import { groupBy } from '../utils/groupBy';
+import Spinner from './Spinner';
 
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
@@ -137,7 +138,9 @@ const OptionsView = () => {
     <div className={'wrapper'}>
       {' '}
       <PriceContainer price={btcPrice} />
-      {contracts && (
+      {contracts.length < 1 ? (
+        <Spinner />
+      ) : (
         <ResponsiveTable data={contracts} expireDates={expireDates} />
       )}
     </div>

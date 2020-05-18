@@ -11,24 +11,24 @@ const ResponsiveTable = ({ data, expireDates }) => {
       <table className='fl-table table-container'>
         <thead>
           <tr className={'table-top-header'}>
-            <th className={'blue-bg sticky-th'} colSpan={'4'}>
+            <th className={'sticky-th call-header'} colSpan={'4'}>
               Call Options
             </th>
             <th></th>
-            <th className={'green-bg sticky-th'} colSpan={'4'}>
+            <th className={'sticky-th put-header'} colSpan={'4'}>
               Put Options
             </th>
           </tr>
           <tr>
-            <th className={'blue-bg sticky-th small-cell'}>Historic</th>
-            <th className={'blue-bg sticky-th'}>OI</th>
-            <th className={'blue-bg sticky-th'}>Bid</th>
-            <th className={'blue-bg sticky-th'}>Ask</th>
+            <th className={'sticky-th small-cell'}>Details</th>
+            <th className={'sticky-th'}>OI</th>
+            <th className={'sticky-th'}>Bid</th>
+            <th className={'sticky-th'}>Ask</th>
             <th className={'purple-bg sticky-th'}>Strike</th>
-            <th className={'green-bg sticky-th'}>Bid</th>
-            <th className={'green-bg sticky-th'}>Ask</th>
-            <th className={'green-bg sticky-th'}>OI</th>
-            <th className={'green-bg sticky-th small-cell'}>Historic</th>
+            <th className={'sticky-th'}>Bid</th>
+            <th className={'sticky-th'}>Ask</th>
+            <th className={'sticky-th'}>OI</th>
+            <th className={'sticky-th small-cell'}>Details</th>
           </tr>
         </thead>
         <tbody>
@@ -51,7 +51,7 @@ const ResponsiveTable = ({ data, expireDates }) => {
                   return (
                     <tr
                       key={`${call.id}_${put.id}`}
-                      className={`${putClass} ${callClass}`}
+                      className={`data-row ${putClass} ${callClass}`}
                     >
                       <td>
                         {' '}
@@ -62,7 +62,7 @@ const ResponsiveTable = ({ data, expireDates }) => {
                           }}
                         >
                           {' '}
-                          A
+                          <img src={'/graph_icon.svg'} />
                         </Link>
                       </td>
                       <td className={'call-option'}>{call.open_interest}</td>
@@ -72,7 +72,7 @@ const ResponsiveTable = ({ data, expireDates }) => {
                       <td className={'call-option'}>
                         {(call.ask / 100).toFixed(2)}
                       </td>
-                      <td className={'meta-bold light-gray-bg'}>
+                      <td className={'meta-bold light-gray-bg data-strike'}>
                         {numberWithCommas(strike_price / 100)}
                       </td>
                       <td className={'put-option'}>
@@ -82,17 +82,18 @@ const ResponsiveTable = ({ data, expireDates }) => {
                         {(put.ask / 100).toFixed(2)}
                       </td>
                       <td className={'put-option'}>{put.open_interest}</td>
-                      <Link
-                        to={{
-                          pathname: `/contract/${put.id}`,
-                          myCustomProps: put,
-                        }}
-                      >
-                        {' '}
-                        A
-                      </Link>
+                      <td>
+                        <Link
+                          to={{
+                            pathname: `/contract/${put.id}`,
+                            myCustomProps: put,
+                          }}
+                        >
+                          {' '}
+                          <img src={'/graph_icon.svg'} />
+                        </Link>
+                      </td>
                     </tr>
-                    // </Link>
                   );
                 }
               })}

@@ -40,6 +40,10 @@
   background: #f8f8f8;
 }
 
+.fl-table tr th {
+  background: #2a2252;
+}
+
 /* Responsive */
 
 @media (max-width: 767px) {
@@ -117,8 +121,15 @@ th.sticky-th {
   top: 0;
 }
 
+.fl-table tr.title-row th {
+  background: #cdcdcd;
+  color: black;
+}
+
 th.meta-date {
   font-size: 1.25em;
+  background: #cdcdcd;
+  color: white;
 }
 
 .light-blue {
@@ -142,7 +153,13 @@ th.meta-date {
 }
 
 .light-gray-bg {
-  background: #d6d0ee;
+  background: #f9faff;
+  border: 1px solid #ededed;
+}
+
+tr .light-gray-bg:last-of-type,
+.light-gray-bg:last-child {
+  border: 5px solid red !important;
 }
 
 td {
@@ -161,55 +178,40 @@ td {
 .flash-call .call-option {
   //   background-color: red !important;
   -webkit-animation-name: flash-animation-variant;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-duration: 1s;
 
   animation-name: flash-animation-variant;
-  animation-duration: 2s;
+  animation-duration: 1s;
 }
 
 @-webkit-keyframes flash-animation-variant {
   from {
-    background: yellow;
+    background: #fff;
   }
   to {
-    background: red;
+    background: #aeaeae;
   }
 }
 
 @keyframes flash-animation-variant {
   from {
-    background: blue;
+    background: #fff;
+    border: none;
   }
   to {
-    background: purple;
+    background: #aeaeae;
+    border: none;
+    color: white;
   }
 }
 
 .flash-put .put-option {
   //   background-color: red !important;
-  -webkit-animation-name: flash-animation;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-name: flash-animation-variant;
+  -webkit-animation-duration: 1s;
 
-  animation-name: flash-animation;
-  animation-duration: 2s;
-}
-
-@-webkit-keyframes flash-animation {
-  from {
-    background: yellow;
-  }
-  to {
-    background: red;
-  }
-}
-
-@keyframes flash-animation {
-  from {
-    background: yellow;
-  }
-  to {
-    background: red;
-  }
+  animation-name: flash-animation-variant;
+  animation-duration: 1s;
 }
 
 @media (min-width: 767px) {
