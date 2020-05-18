@@ -60,6 +60,7 @@ const ContractView = ({ location }) => {
 
   const [historic, setHistoric] = useState([]);
   const [isMoundted, setIsMounted] = useState(false);
+  const [contractId, setContractId] = useState('');
 
   useEffect(() => {
     // console.log(location.pathname);
@@ -74,6 +75,9 @@ const ContractView = ({ location }) => {
         console.log(pathname, ' pathh');
         data.map((el) => console.log(el.contract_id));
         const current = data.find((el) => el.contract_id == path);
+
+        console.log(current, 'currentt');
+        setContractId(current.contract_id);
 
         const midPointPrices = current.prices.map((el) => {
           return {
@@ -101,10 +105,10 @@ const ContractView = ({ location }) => {
     <div>
       {historic && (
         <div>
-          {/* <h1>{location.myCustomProps.label}</h1> */}
+          <h1>Data for contract: {contractId}</h1>
           {/* <h2>Expires: {location.myCustomProps.date_expires}</h2> */}
           <LineChart
-            width={500}
+            width={1000}
             height={300}
             data={historic}
             margin={{

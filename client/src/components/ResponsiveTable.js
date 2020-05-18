@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import './ResponsiveTable.scss';
+import { numberWithCommas } from '../utils/numberWithCommas';
 
-const ResponsiveTable = ({ data }) => {
-  const expire = data.map((el) => el.date_expires);
-  const expireDates = [...new Set(expire)];
-
+const ResponsiveTable = ({ data, expireDates }) => {
   return (
     <div className='table-wrapper'>
       <table className='fl-table table-container'>
@@ -38,7 +36,7 @@ const ResponsiveTable = ({ data }) => {
             <>
               <tr className={'title-row'}>
                 <th className={'meta-date'} colSpan={'9'}>
-                  {moment(date).format('DD-MM-YYYY')}
+                  {moment(date).format('MM-DD-YYYY')}
                 </th>
               </tr>
               {data.map((option) => {
@@ -75,7 +73,7 @@ const ResponsiveTable = ({ data }) => {
                         {(call.ask / 100).toFixed(2)}
                       </td>
                       <td className={'meta-bold light-gray-bg'}>
-                        {strike_price}
+                        {numberWithCommas(strike_price / 100)}
                       </td>
                       <td className={'put-option'}>
                         {(put.bid / 100).toFixed(2)}

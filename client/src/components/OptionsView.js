@@ -15,6 +15,7 @@ let socket;
 const OptionsView = () => {
   const [contracts, setContracts] = useState([]);
   const [btcPrice, setBtcPrice] = useState({ bid: 0, ask: 0 });
+  const [expireDates, setExpireDates] = useState([]);
 
   const [isContracts, setIsContracts] = useState(false);
   const [isSocket, setIsSocket] = useState(false);
@@ -64,8 +65,17 @@ const OptionsView = () => {
           })
         );
 
+        const expire = grouped.map((el) => el.date_expires);
+        const setOfExpire = [...new Set(expire)];
+        setExpireDates(setOfExpire);
+        console.log(expireDates, 'EXPIREE');
+
+        console.log(grouped, 'grouppeddd');
+        const sorted = grouped.sort((a, b) => a.strike_price - b.strike_price);
+        console.log(sorted, 'sorted');
+
         // setContracts(grouped);
-        setContracts((prevContracts) => [...prevContracts, ...grouped]);
+        setContracts((prevContracts) => [...prevContracts, ...sorted]);
 
         setIsContracts(true);
       } catch (err) {
@@ -127,7 +137,9 @@ const OptionsView = () => {
     <div className={'wrapper'}>
       {' '}
       <PriceContainer price={btcPrice} />
-      {contracts && <ResponsiveTable data={contracts} />}
+      {contracts && (
+        <ResponsiveTable data={contracts} expireDates={expireDates} />
+      )}
     </div>
   );
 };
