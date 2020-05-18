@@ -77,6 +77,7 @@ const OptionsView = () => {
     if (!isContracts) {
       fetchContracts();
     }
+    return () => setIsSocket(true);
   }, [setContracts]);
 
   const updateQuote = (data) => {

@@ -3,7 +3,6 @@ import './price_container.scss';
 import axios from 'axios';
 
 const PriceContainer = ({ price }) => {
-  console.log(price, 'PRICEE');
   return (
     <div className={'flex-container'}>
       <h2 className={'flex-item'}>
