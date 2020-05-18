@@ -48,10 +48,12 @@ const ResponsiveTable = ({ data, expireDates }) => {
                     putClass,
                     callClass,
                   } = option;
+                  const cssPut = putClass || '';
+                  const cssCall = callClass || '';
                   return (
                     <tr
                       key={`${call.id}_${put.id}`}
-                      className={`data-row ${putClass} ${callClass}`}
+                      className={`data-row ${cssPut} ${cssCall}`}
                     >
                       <td>
                         {' '}
