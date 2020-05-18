@@ -2,7 +2,7 @@
 
 ## Run the server
 
-From the `server` directory run `npm install` to install dependencies. Therefore run `node server.js`. This will spin a server on port 4000.
+From the `server` directory run `npm install` to install dependencies. Then you can simply run `node server.js`. This will spin a server on port 4000.
 
 ## Run the React app
 
@@ -28,7 +28,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Live Feed data
 
-I am pulling live data from the Ledger X [https://trade.ledgerx.com/api](live feed)).
+I am pulling live data from the Ledger X [https://trade.ledgerx.com/api](live feed).
 
 Since I had some issue in getting the data directly from the React app, due to CORS settings, I took the following steps:
 
