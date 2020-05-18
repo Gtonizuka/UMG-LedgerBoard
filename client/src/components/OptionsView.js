@@ -45,7 +45,7 @@ const OptionsView = () => {
         });
 
         //Add starting prices
-        const pricedContracts = active.map((el) => {
+        active.forEach((el) => {
           booksTopArr.forEach((x) => {
             if (x.contract_id === el.id) {
               el.bid = x.bid;
@@ -66,18 +66,15 @@ const OptionsView = () => {
           })
         );
 
+        // Get array of expiring date -- Set will remove all duplicates
         const expire = grouped.map((el) => el.date_expires);
         const setOfExpire = [...new Set(expire)];
         setExpireDates(setOfExpire);
-        console.log(expireDates, 'EXPIREE');
 
-        console.log(grouped, 'grouppeddd');
         const sorted = grouped.sort((a, b) => a.strike_price - b.strike_price);
-        console.log(sorted, 'sorted');
-
-        // setContracts(grouped);
         setContracts((prevContracts) => [...prevContracts, ...sorted]);
 
+        // set flag to true to avoid memory leaks
         setIsContracts(true);
       } catch (err) {
         console.error(err);
@@ -89,7 +86,7 @@ const OptionsView = () => {
       fetchContracts();
     }
     return () => setIsSocket(true);
-  }, [setContracts]);
+  }, [setContracts, isContracts]);
 
   const updateQuote = (data) => {
     const parsed = JSON.parse(data);

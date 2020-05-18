@@ -15,49 +15,48 @@ const io = socket(http, {
   },
 });
 
+/*
+    Create API route for contracts data
+*/
+
 const historicData = [];
 
-const historicApi = axios
-  .get('https://trade.ledgerx.com/api/book-tops?')
-  .then((res) => {
-    const { data } = res.data;
-    data.map((el) => {
-      const { contract_id } = el;
-      historicData.push({
-        contract_id,
-        prices: [],
-      });
+axios.get('https://trade.ledgerx.com/api/book-tops?').then((res) => {
+  const { data } = res.data;
+  data.map((el) => {
+    const { contract_id } = el;
+    historicData.push({
+      contract_id,
+      prices: [],
     });
   });
+});
 
 // Home page route.
 app.get('/historic', function (req, res) {
   res.send(historicData);
 });
 
+/*
+    WS events
+*/
+
 const ws = new WebSocket('wss://trade.ledgerx.com/api/ws');
 
 ws.on('message', function incoming(data) {
-  //   console.log(JSON.parse(data));
-
   const parsed = JSON.parse(data);
 
   io.emit('quotes', data);
   const x = historicData.find((el) => el.contract_id === parsed.contract_id);
   if (x && x.prices) {
     if (x.prices.length < 30) {
-      console.log(x.prices.length);
       parsed.time = new Date();
       x.prices.push(parsed);
     }
   }
-  //   console.log(x || 'no contract');
 });
 
-io.on('connection', function (socket) {
-  console.log('Connection established');
-});
-
+// Listen to server
 http.listen(4000, function () {
   console.log('listening on *:4000');
 });

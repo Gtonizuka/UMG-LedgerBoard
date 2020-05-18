@@ -33,7 +33,7 @@ const ResponsiveTable = ({ data, expireDates }) => {
         </thead>
         <tbody>
           {expireDates.map((date) => (
-            <>
+            <React.Fragment key={date}>
               <tr className={'title-row'}>
                 <th className={'meta-date'} colSpan={'9'}>
                   {moment(date).format('MM-DD-YYYY')}
@@ -62,7 +62,7 @@ const ResponsiveTable = ({ data, expireDates }) => {
                           }}
                         >
                           {' '}
-                          <img src={'/graph_icon.svg'} />
+                          <img src={'/graph_icon.svg'} alt={'graph icon'} />
                         </Link>
                       </td>
                       <td className={'call-option'}>{call.open_interest}</td>
@@ -90,14 +90,14 @@ const ResponsiveTable = ({ data, expireDates }) => {
                           }}
                         >
                           {' '}
-                          <img src={'/graph_icon.svg'} />
+                          <img src={'/graph_icon.svg'} alt={'graph icon'} />
                         </Link>
                       </td>
                     </tr>
                   );
                 }
               })}
-            </>
+            </React.Fragment>
           ))}
         </tbody>
       </table>

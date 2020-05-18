@@ -26,10 +26,8 @@ const ContractView = ({ location }) => {
       try {
         const apiData = await axios.get(`http://localhost:4000/historic`);
         const { data } = apiData;
-        data.map((el) => console.log(el.contract_id));
         const current = data.find((el) => el.contract_id == path);
 
-        console.log(current, 'currentt');
         setContractId(current.contract_id);
 
         const midPointPrices = current.prices.map((el) => {
@@ -54,7 +52,7 @@ const ContractView = ({ location }) => {
   }, []);
 
   return (
-    <div>
+    <div className={'wrapper'}>
       {historic && (
         <div>
           <h1>Data for contract: {contractId}</h1>
@@ -74,7 +72,7 @@ const ContractView = ({ location }) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type='monotone' dataKey='midpoint' stroke='#82ca9d' />
+            <Line type='monotone' dataKey='midpoint' stroke='#2a2252' />
           </LineChart>{' '}
         </div>
       )}
