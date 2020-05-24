@@ -44,6 +44,7 @@ app.get('/historic', function (req, res) {
 const ws = new WebSocket('wss://trade.ledgerx.com/api/ws');
 
 ws.on('message', function incoming(data) {
+  console.log(data, 'daa');
   const parsed = JSON.parse(data);
 
   io.emit('quotes', data);

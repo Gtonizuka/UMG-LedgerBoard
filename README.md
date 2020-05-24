@@ -28,7 +28,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Live Feed data
 
-I am pulling live data from the Ledger X [https://trade.ledgerx.com/api](live feed).
+I am pulling live data from the Ledger X [https://trade.ledgerx.com/api] (live feed).
 
 Since I had some issue in getting the data directly from the React app, due to CORS settings, I took the following steps:
 

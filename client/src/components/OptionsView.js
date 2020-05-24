@@ -15,7 +15,7 @@ let socket;
 
 const OptionsView = () => {
   const [contracts, setContracts] = useState([]);
-  const [btcPrice, setBtcPrice] = useState({ bid: 0, ask: 0 });
+  const [btcPrice, setBtcPrice] = useState({ id: 0, bid: 0, ask: 0 });
   const [expireDates, setExpireDates] = useState([]);
 
   const [isContracts, setIsContracts] = useState(false);
@@ -38,12 +38,6 @@ const OptionsView = () => {
           (contract) => contract.active !== false
         );
 
-        const btc = booksTopArr.find((el) => el.contract_id === 22200586);
-        setBtcPrice({
-          ask: btc.ask,
-          bid: btc.bid,
-        });
-
         //Add starting prices
         active.forEach((el) => {
           booksTopArr.forEach((x) => {
@@ -53,6 +47,14 @@ const OptionsView = () => {
             }
           });
         });
+
+        const btc = active.find(
+          (el) => el.derivative_type === 'day_ahead_swap'
+        );
+        console.log('BTC', btc);
+        console.log('BTC', btc.id);
+
+        setBtcPrice(btc);
 
         // Group contracts
         const grouped = groupBy(
@@ -95,8 +97,8 @@ const OptionsView = () => {
     if (parsed.type === 'book_top') {
       const { contract_id, contract_type, ask, bid } = parsed;
 
-      // BTC contract ID
-      if (contract_id === 22200586 || contract_type === 2) {
+      //BTC contract ID
+      if (contract_id === btcPrice.id) {
         setBtcPrice({ bid, ask });
       }
 
